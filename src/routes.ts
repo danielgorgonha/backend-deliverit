@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { BillsToPayController } from "./controllers/BillsToPayController";
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  return res.send('ok');
-});
+const billtopayController = new BillsToPayController();
+
+router.post('/billtopay', billtopayController.create);
 
 export { router };
