@@ -1,6 +1,8 @@
 import express from "express";
 import { router } from "./routes";
 
+import "./database";
+
 class App {
   public express: express.Application
   
