@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import { DelayRule } from "../models/DelayRule";
+import { getCustomRepository } from "typeorm";
+import { DelayRulesRepository } from "../repositories/DelayRulesRepository";
 
 
 class DelayRuleController {
   async create(request: Request, response: Response) {
     const { delayed_days, penalty_value, interest_per_day } = request.body;
 
-    const delayruleRepository = getRepository(DelayRule);
+    const delayruleRepository = getCustomRepository(DelayRulesRepository);
 
     const delayruleAlreadyExists = await delayruleRepository.findOne({
       delayed_days

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import { BillsToPay } from "../models/BillsToPay";
+import { getCustomRepository } from "typeorm";
+import { BillsToPaysRepository } from "../repositories/BillsToPaysRepository";
 
 class BillsToPayController {
   async create(request: Request, response: Response) {
     const { name, orginal_value, expiration_date, payment_date } = request.body;
 
-    const billstopayRepository = getRepository(BillsToPay);
-
+    const billstopayRepository = getCustomRepository(BillsToPaysRepository);
+    
     const billstopayAlreadyExists = await billstopayRepository.findOne({
       name
     });
