@@ -4,7 +4,7 @@ import { BillsToPay } from "../models/BillsToPay";
 
 class BillsToPayController {
   async create(request: Request, response: Response) {
-    const { name, orginalValue, expirationDate } = request.body;
+    const { name, orginal_value, expiration_date, payment_date } = request.body;
 
     const billstopayRepository = getRepository(BillsToPay);
 
@@ -20,8 +20,9 @@ class BillsToPayController {
 
     const billtopay = billstopayRepository.create({
       name,
-      orginalValue,
-      expirationDate
+      orginal_value,
+      expiration_date,
+      payment_date
     });
 
     await billstopayRepository.save(billtopay);

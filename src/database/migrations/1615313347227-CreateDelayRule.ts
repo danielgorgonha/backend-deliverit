@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateBillsToPay1615284393778 implements MigrationInterface {
+export class CreateDelayRule1615313347227 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "billstopays",
+                name: "delayrules",
                 columns: [
                     {
                         name: "id",
@@ -13,34 +13,28 @@ export class CreateBillsToPay1615284393778 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "name",
+                        name: "delayed_days",
                         type: "varchar",
                     },
                     {
-                        name: "orginal_value",
+                        name: "penalty_value",
                         type: "number",
                     },
                     {
-                        name: "expiration_date",
-                        type: "varchar",
-                    },
-                    {
-                        name: "payment_date",
-                        type: "varchar",
-                        isNullable: true,
+                        name: "interest_per_day",
+                        type: "number"
                     },
                     {
                         name: "created_at",
                         type: "timestamp",
                         default: "now()",
                     }
-                ]
+                ],
             })
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("billstopays");
     }
 
 }

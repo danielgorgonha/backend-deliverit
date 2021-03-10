@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, IsNull, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 @Entity("billstopays")
@@ -11,10 +11,19 @@ class BillsToPay {
   name: string;
 
   @Column()
-  orginalValue: number;
+  orginal_value: number;
 
-  @CreateDateColumn()
-  expirationDate: Date;
+  @Column()
+  expiration_date: string;
+
+  @Column()
+  payment_date: string;
+
+  @Column()
+  corrected_value: number;
+
+  @Column()
+  number_days_late: number;
 
   @CreateDateColumn()
   created_at: Date;
