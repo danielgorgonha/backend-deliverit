@@ -35,6 +35,7 @@ export class CreateDelayRule1615313347227 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable("delayrules");
     }
 
 }
