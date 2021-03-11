@@ -8,6 +8,9 @@ const billtopayController = new BillsToPayController();
 const delayruleController = new DelayRuleController();
 
 router.post('/billtopay', billtopayController.create);
+router.get('/billtopay', billtopayController.show);
+
 router.post('/delayrule', delayruleController.create);
+
 
 export { router };
