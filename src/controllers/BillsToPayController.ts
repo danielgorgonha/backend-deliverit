@@ -1,3 +1,4 @@
+import { AppError } from "../errors/AppError";
 import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
 import { BillsToPaysRepository } from "../repositories/BillsToPaysRepository";
@@ -5,9 +6,23 @@ import { DelayRulesBillsToPaysRepository } from "../repositories/DelayRulesBills
 import DelayRuleService from "../services/DelayRuleService";
 import { DiffDate } from "../utils/DiffDate";
 
+import * as yup from 'yup';
+
 class BillsToPayController {
   async create(request: Request, response: Response) {
-    const { name, orginal_value, expiration_date, payment_date } = request.body;
+    const { name, original_value, expiration_date, payment_date } = request.body;
+    const schema = yup.object().shape({
+      name: yup.string().required(),
+      original_value: yup.number().required(),
+      expiration_date: yup.date().required(),
+      payment_date: yup.date().required()
+    });
+
+    try {
+      await schema.validate(request.body, { abortEarly: false });
+    } catch(err) {
+      throw new AppError(err);
+    }
 
     const billstopayRepository = getCustomRepository(BillsToPaysRepository);
 
@@ -16,14 +31,12 @@ class BillsToPayController {
     });
 
     if (billstopay) {
-      return response.status(400).json({
-        error: "Bill to pay already exists!"
-      });
+      throw new AppError("Bill to pay already exists!");
     }
 
     const billtopay = billstopayRepository.create({
       name,
-      orginal_value,
+      original_value,
       expiration_date,
       payment_date
     });
@@ -33,7 +46,7 @@ class BillsToPayController {
     const diffDays = DiffDate(expiration_date);
 
     if (diffDays) {
-      DelayRuleService.execute(diffDays, orginal_value, billtopay.id)
+      DelayRuleService.execute(diffDays, original_value, billtopay.id)
     }
 
     return response.status(201).json(billtopay);
@@ -44,7 +57,7 @@ class BillsToPayController {
     const billsToPayRepository = getCustomRepository(BillsToPaysRepository);
     const delayRulesBillsToPaysRepository = getCustomRepository(DelayRulesBillsToPaysRepository);
 
-    const all = await billsToPayRepository.find(); 
+    const all = await billsToPayRepository.find();
     const fkDelayRuleBillsToPay = await delayRulesBillsToPaysRepository.find();
     const data = [];
 
@@ -55,13 +68,13 @@ class BillsToPayController {
         fkDelayRuleBillsToPay.filter((data, index, array) => {
           if (data.billstopay_id === thisOne.id) {
             corrected_value += data.corrected_value;
-            number_days_late += data.number_days_late; 
+            number_days_late += data.number_days_late;
           }
         });
 
         data.push({
           name: thisOne.name,
-          orginal_value: thisOne.orginal_value,
+          orginal_value: thisOne.original_value,
           corrected_value,
           number_days_late,
           payment_date: thisOne.payment_date

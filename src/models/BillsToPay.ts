@@ -11,13 +11,13 @@ class BillsToPay {
   name: string;
 
   @Column()
-  orginal_value: number;
+  original_value: number;
 
   @Column()
-  expiration_date: string;
+  expiration_date: Date;
 
   @Column()
-  payment_date: string;
+  payment_date: Date;
 
   @CreateDateColumn()
   created_at: Date;
@@ -27,6 +27,6 @@ class BillsToPay {
       this.id = uuid();
     }
   }
-} 
+}
 
 export { BillsToPay };

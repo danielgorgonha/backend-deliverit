@@ -27,7 +27,6 @@ export class CreateBillsToPay1615284393778 implements MigrationInterface {
                     {
                         name: "payment_date",
                         type: "timestamp",
-                        isNullable: true,
                     },
                     {
                         name: "created_at",

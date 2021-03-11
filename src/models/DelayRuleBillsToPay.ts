@@ -9,7 +9,7 @@ class DelayRuleBillsToPay {
 
   @Column()
   billstopay_id: string;
-  
+
   @Column()
   delayrule_id: string;
 

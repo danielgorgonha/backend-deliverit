@@ -4,14 +4,14 @@ import { DelayRulesRepository } from "../repositories/DelayRulesRepository";
 
 class DelayRuleService {
 
-  async execute(diffDays: number, orginal_value: number, billtopayId: string) {
+  async execute(diffDays: number, original_value: number, billtopayId: string) {
 
     const delayRuleRepository = getCustomRepository(DelayRulesRepository);
     const delayRulesBillsToPaysRepository = getCustomRepository(DelayRulesBillsToPaysRepository);
     const array = [];
-    
+
     const delayRules = await delayRuleRepository.find();
-    
+
     delayRules.map((res) => {
       if (res.equality === "Equal" && diffDays == res.day) {
         array.push(res)
@@ -22,8 +22,8 @@ class DelayRuleService {
       }
     });
 
-    const number_days_late = (orginal_value * array[array.length - 1].interest_per_day / 100) * diffDays
-    const corrected_value = (orginal_value + (orginal_value * array[array.length - 1].penalty_value / 100)) + number_days_late
+    const number_days_late = (original_value * array[array.length - 1].interest_per_day / 100) * diffDays
+    const corrected_value = (original_value + (original_value * array[array.length - 1].penalty_value / 100)) + number_days_late
 
     const delayRuleBillToPay = delayRulesBillsToPaysRepository.create({
       billstopay_id: billtopayId,
