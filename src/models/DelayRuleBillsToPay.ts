@@ -19,6 +19,9 @@ class DelayRuleBillsToPay {
   @Column()
   number_days_late: number;
 
+  @CreateDateColumn()
+  created_at: Date;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();

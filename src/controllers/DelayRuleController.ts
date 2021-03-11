@@ -5,12 +5,12 @@ import { DelayRulesRepository } from "../repositories/DelayRulesRepository";
 
 class DelayRuleController {
   async create(request: Request, response: Response) {
-    const { delayed_days, penalty_value, interest_per_day } = request.body;
+    const { title, equality, day, penalty_value, interest_per_day } = request.body;
 
     const delayruleRepository = getCustomRepository(DelayRulesRepository);
 
     const delayruleAlreadyExists = await delayruleRepository.findOne({
-      delayed_days
+      where: [{ title, equality, day }]
     });
 
     if (delayruleAlreadyExists) {
@@ -20,7 +20,9 @@ class DelayRuleController {
     }
 
     const delayrule = delayruleRepository.create({
-      delayed_days,
+      title,
+      equality,
+      day,
       penalty_value,
       interest_per_day,
     });

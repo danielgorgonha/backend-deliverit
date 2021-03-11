@@ -22,11 +22,11 @@ export class CreateBillsToPay1615284393778 implements MigrationInterface {
                     },
                     {
                         name: "expiration_date",
-                        type: "varchar",
+                        type: "timestamp",
                     },
                     {
                         name: "payment_date",
-                        type: "varchar",
+                        type: "timestamp",
                         isNullable: true,
                     },
                     {

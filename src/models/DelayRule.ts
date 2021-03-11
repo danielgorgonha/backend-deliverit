@@ -8,7 +8,13 @@ class DelayRule {
   readonly id: string;
 
   @Column()
-  delayed_days: string;
+  title: string;
+
+  @Column()
+  equality: string;
+
+  @Column()
+  day: number;
 
   @Column()
   penalty_value: number;

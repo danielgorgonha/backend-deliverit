@@ -13,8 +13,16 @@ export class CreateDelayRule1615313347227 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "delayed_days",
+                        name: "title",
                         type: "varchar",
+                    },
+                    {
+                        name: "equality",
+                        type: "varchar",
+                    },
+                    {
+                        name: "day",
+                        type: "number",
                     },
                     {
                         name: "penalty_value",
@@ -22,7 +30,7 @@ export class CreateDelayRule1615313347227 implements MigrationInterface {
                     },
                     {
                         name: "interest_per_day",
-                        type: "number"
+                        type: "number",
                     },
                     {
                         name: "created_at",

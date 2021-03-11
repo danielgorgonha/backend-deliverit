@@ -19,12 +19,6 @@ class BillsToPay {
   @Column()
   payment_date: string;
 
-  @Column()
-  corrected_value: number;
-
-  @Column()
-  number_days_late: number;
-
   @CreateDateColumn()
   created_at: Date;
 
