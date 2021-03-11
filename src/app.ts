@@ -2,7 +2,7 @@ import express from "express";
 import { router } from "./routes";
 
 import "reflect-metadata";
-import "./database";
+import createConnection from "./database";
 
 class App {
   public express: express.Application
@@ -11,6 +11,7 @@ class App {
     this.express = express();
 
     this.middlawares();
+    this.database();
     this.routes();
   }
 
@@ -20,6 +21,10 @@ class App {
 
   private routes() {
     this.express.use(router);
+  }
+
+  private database() {
+    createConnection();
   }
 }
 
