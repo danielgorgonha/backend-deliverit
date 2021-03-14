@@ -25,6 +25,10 @@
 
 ```bash
   git clone https://github.com/danielgorgonha/backend-deliverit.git
+```
 
+- Alterar arquivo ".env.example" para ".env";
+
+```bash
   docker-compose up
 ```
