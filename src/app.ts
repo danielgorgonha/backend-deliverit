@@ -2,6 +2,8 @@ import { AppError } from "./errors/AppError";
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import { router } from "./routes";
+import cors from "cors";
+import nocache from "nocache";
 
 import "reflect-metadata";
 import createConnection from "./database";
@@ -22,6 +24,15 @@ class App {
 
   private middlawares() {
     this.express.use(express.json());
+    this.express.use(cors({ origin: process.env.CORS }));
+    this.express.use(nocache());
+    this.express.use((req, res, next) => {
+      if (req.headers.token === process.env.TOKEN) {
+        return next()
+      } else {
+        return res.status(401).json({ status: 401, message: 'Invalid Access!' })
+      }
+    });
   }
 
   private routes() {
