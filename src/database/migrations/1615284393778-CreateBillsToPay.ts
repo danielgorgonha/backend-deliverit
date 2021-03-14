@@ -17,7 +17,7 @@ export class CreateBillsToPay1615284393778 implements MigrationInterface {
                         type: "varchar",
                     },
                     {
-                        name: "orginal_value",
+                        name: "original_value",
                         type: "number",
                     },
                     {

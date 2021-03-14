@@ -7,10 +7,13 @@ import DelayRuleService from "../services/DelayRuleService";
 import { DiffDate } from "../utils/DiffDate";
 
 import * as yup from 'yup';
+import { DelayRulesRepository } from "../repositories/DelayRulesRepository";
 
 class BillsToPayController {
   async create(request: Request, response: Response) {
     const { name, original_value, expiration_date, payment_date } = request.body;
+    const diffDays = DiffDate(expiration_date);
+
     const schema = yup.object().shape({
       name: yup.string().required(),
       original_value: yup.number().required(),
@@ -25,6 +28,7 @@ class BillsToPayController {
     }
 
     const billstopayRepository = getCustomRepository(BillsToPaysRepository);
+    const delayRuleRepository = getCustomRepository(DelayRulesRepository);
 
     const billstopay = await billstopayRepository.findOne({
       name
@@ -32,6 +36,12 @@ class BillsToPayController {
 
     if (billstopay) {
       throw new AppError("Bill to pay already exists!");
+    }
+
+    const delayRules = await delayRuleRepository.find();
+
+    if (!delayRules) {
+      throw new AppError("Delay rules do not exist, for that account with a delayed date, you must create the rules!");
     }
 
     const billtopay = billstopayRepository.create({
@@ -42,8 +52,6 @@ class BillsToPayController {
     });
 
     await billstopayRepository.save(billtopay);
-
-    const diffDays = DiffDate(expiration_date);
 
     if (diffDays) {
       DelayRuleService.execute(diffDays, original_value, billtopay.id)

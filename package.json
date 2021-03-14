@@ -12,7 +12,8 @@
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "testWin": "set NODE_ENV=test&&jest",
-    "posttestWin": "del .\\src\\database\\database.test.sqlite"
+    "posttestWin": "del .\\src\\database\\database.test.sqlite",
+    "test": "jest"
   },
   "dependencies": {
     "express": "^4.17.1",
