@@ -10,8 +10,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
-    "build": "tsc",
-    "start": "node ./dist/src/server.js",
+    "start": "ts-node ./src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "testWin": "set NODE_ENV=test&&jest",
     "posttestWin": "del .\\src\\database\\database.test.sqlite",
