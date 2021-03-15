@@ -24,7 +24,7 @@ class App {
 
   private middlawares() {
     this.express.use(express.json());
-    this.express.use(cors({ origin: process.env.CORS }));
+    this.express.use(cors());
     this.express.use(nocache());
     this.express.use((req, res, next) => {
       if (req.headers.token === process.env.TOKEN) {

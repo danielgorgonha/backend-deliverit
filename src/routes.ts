@@ -11,6 +11,7 @@ router.post('/billtopay', billtopayController.create);
 router.get('/billtopay', billtopayController.show);
 
 router.post('/delayrule', delayruleController.create);
+router.get('/delayrule', delayruleController.show);
 
 
 export { router };

@@ -45,11 +45,15 @@ class DelayRuleController {
     return response.status(201).json(delayrule);
   }
 
-  /*async show(request: Request, response: Response) {
+  async show(request: Request, response: Response) {
+    const delayRuleRepository = getCustomRepository(DelayRulesRepository);
 
+    const data = await delayRuleRepository.find();
+
+    return response.json(data)
   }
 
-  async update(request: Request, response: Response) {
+  /*async update(request: Request, response: Response) {
 
   }
 
